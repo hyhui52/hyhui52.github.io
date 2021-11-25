@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="jvm笔记, Hexo">
+    <meta name="keywords" content="jvm笔记, hyhuiBlog">
     <meta name="description" content="JVM
 熟悉JVM架构与GC垃圾回收机制以及相应的堆参调优，有过在linux进行系统调优的经验
 
@@ -25,7 +25,7 @@ Class Loader类加载器
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>jvm笔记 | Hexo</title>
+    <title>jvm笔记 | hyhuiBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -54,7 +54,7 @@ Class Loader类加载器
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">Hexo</span>
+                    <span class="logo-span">hyhuiBlog</span>
                 </a>
             </div>
             
@@ -142,7 +142,7 @@ Class Loader类加载器
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">Hexo</div>
+        <div class="logo-name">hyhuiBlog</div>
         <div class="logo-desc">
             
             平凡的脚步也可以走出伟大的行程
@@ -545,26 +545,26 @@ Class Loader类加载器
 <td>输出详细的GC处理日志</td>
 </tr>
 </tbody></table>
-<h2 id="七、GC三大算法"><a href="#七、GC三大算法" class="headerlink" title="七、GC三大算法"></a>七、GC三大算法</h2><h3 id="7-1-GC算法总体概述"><a href="#7-1-GC算法总体概述" class="headerlink" title="7.1 GC算法总体概述"></a>7.1 GC算法总体概述</h3><p>JVM在进行GC时，并非每次都对上面三个内存区域一起回收的，大部分时候回收的都是指新生代。</p>
+<h2 id="六、GC三大算法"><a href="#六、GC三大算法" class="headerlink" title="六、GC三大算法"></a>六、GC三大算法</h2><h3 id="6-1-GC算法总体概述"><a href="#6-1-GC算法总体概述" class="headerlink" title="6.1 GC算法总体概述"></a>6.1 GC算法总体概述</h3><p>JVM在进行GC时，并非每次都对上面三个内存区域一起回收的，大部分时候回收的都是指新生代。</p>
 <p>因此GC按照回收的区域又分了两种类型，一种是普通GC（MinorGC），一种时全局GC（FullGC）</p>
 <ul>
 <li>普通GC：只针对新生代区域的GC</li>
 <li>全局GC：针对年老代的GC，偶尔伴随对新生代的GC以及堆永久代的GC。</li>
 </ul>
-<h3 id="7-2-复制算法：MinorGC（普通GC"><a href="#7-2-复制算法：MinorGC（普通GC" class="headerlink" title="7.2 复制算法：MinorGC（普通GC)"></a>7.2 复制算法：MinorGC（普通GC)</h3><p>新生代使用的MinorGC，这种GC算法采用的是复制算法（Copying），频繁使用</p>
+<h3 id="6-2-复制算法：MinorGC（普通GC"><a href="#6-2-复制算法：MinorGC（普通GC" class="headerlink" title="6.2 复制算法：MinorGC（普通GC)"></a>6.2 复制算法：MinorGC（普通GC)</h3><p>新生代使用的MinorGC，这种GC算法采用的是复制算法（Copying），频繁使用</p>
 <p>复制–&gt;清空–&gt;互换</p>
-<h4 id="7-2-1-原理"><a href="#7-2-1-原理" class="headerlink" title="7.2.1 原理"></a>7.2.1 原理</h4><p>MinorGC会把Eden中的所有或的对象都移到Survivor区域中，如果Survivor区中放不下，那么剩下的活的对象就被移到Old Generation中，也即一旦收集后，Eden区就变成空的了。</p>
+<h4 id="6-2-1-原理"><a href="#6-2-1-原理" class="headerlink" title="6.2.1 原理"></a>6.2.1 原理</h4><p>MinorGC会把Eden中的所有或的对象都移到Survivor区域中，如果Survivor区中放不下，那么剩下的活的对象就被移到Old Generation中，也即一旦收集后，Eden区就变成空的了。</p>
 <p>当对象在Eden（包括一个Survivor区域，这里假设是from区域）出生后，在经过一次MinorGC后，如果对象还存活，并且能够被另外一块Survivor区域所容纳（上面已经假设为from区域，这里应为to区域，即to区域又足够的内存空间来存储Eden和from区域中存活的对象），则使用复制算法将这些仍然还存活的对象复制到另外一块Survivor区域（即to区）中，然后清理所有使用过的Eden以及Survivor区域（即from区），并且讲这些对象的年龄设置为1，以后对象在Survivor区没熬过一次MinorGC，就将对象的年龄+1，当对象的年龄达到某个值时（默认15，通过<code>-XX：MaxTenuringThreshold</code>来设定参数），这些对象就会成为老年代。</p>
 <p>==-XX：MaxTenuringThreshold设置对象在新生代中存活的次数==</p>
-<h4 id="7-2-2-解释"><a href="#7-2-2-解释" class="headerlink" title="7.2.2 解释"></a>7.2.2 解释</h4><p>HotSpot JVM把年轻代分为了三部分：1个Eden区和两个Survivor区，默认比例是8:1:1，一般情况下，新创建的对象都会被分配到Eden区，这些对象经过第一次的MinorGC后，如果仍然存活，将会被移到Survivor区。对象Survivor区中每熬过一次MinorGC，年龄就增加一岁，当他的年龄增加到一定程度时，就会被移动到年老代中。因为年轻代中的对象基本都是朝生夕死（80%以上），所以在年轻代的垃圾回收算法使用的是复制算法，复制算法的基本思想就是将内存分为两块，每次只用其中一块，当这一块内存用完，就将活着的对象复制到另外一块上面。复制算法不会产生内存碎片。</p>
+<h4 id="6-2-2-解释"><a href="#6-2-2-解释" class="headerlink" title="6.2.2 解释"></a>6.2.2 解释</h4><p>HotSpot JVM把年轻代分为了三部分：1个Eden区和两个Survivor区，默认比例是8:1:1，一般情况下，新创建的对象都会被分配到Eden区，这些对象经过第一次的MinorGC后，如果仍然存活，将会被移到Survivor区。对象Survivor区中每熬过一次MinorGC，年龄就增加一岁，当他的年龄增加到一定程度时，就会被移动到年老代中。因为年轻代中的对象基本都是朝生夕死（80%以上），所以在年轻代的垃圾回收算法使用的是复制算法，复制算法的基本思想就是将内存分为两块，每次只用其中一块，当这一块内存用完，就将活着的对象复制到另外一块上面。复制算法不会产生内存碎片。</p>
 <p>==复制要交换，谁空谁是to==</p>
-<h4 id="7-3-3-劣势"><a href="#7-3-3-劣势" class="headerlink" title="7.3.3 劣势"></a>7.3.3 劣势</h4><p>复制算法弥补了标记清除算法中，内存布局混乱的缺点。</p>
+<h4 id="6-3-3-劣势"><a href="#6-3-3-劣势" class="headerlink" title="6.3.3 劣势"></a>6.3.3 劣势</h4><p>复制算法弥补了标记清除算法中，内存布局混乱的缺点。</p>
 <ol>
 <li>浪费了一般的内存，太要命了</li>
 <li>如果对象的存活率很高，我们可以极端一点，假设是100%存活率，那么我们需要将所有对象都复制一遍，并将所有引用地址重置一遍。复制这一工作所花费的时间，在对象存活率达到一定程度是，将会变的不可忽视。所以从以上描述不难看出，复制算法想要使用，最起码对象的存活率要非常低才行，而且最重要的是，我们必须要客服50%的内存的浪费</li>
 </ol>
-<h3 id="7-3-标记清除-标记整理算法：FullGC又叫MajorGC（全局GC"><a href="#7-3-标记清除-标记整理算法：FullGC又叫MajorGC（全局GC" class="headerlink" title="7.3 标记清除/标记整理算法：FullGC又叫MajorGC（全局GC)"></a>7.3 标记清除/标记整理算法：FullGC又叫MajorGC（全局GC)</h3><p>老年代一般是由标记清除或者是标记清除与标记整理的混合实现</p>
-<h4 id="7-3-1-标记清除（Mark-Sweep"><a href="#7-3-1-标记清除（Mark-Sweep" class="headerlink" title="7.3.1 标记清除（Mark-Sweep)"></a>7.3.1 标记清除（Mark-Sweep)</h4><h5 id="7-3-1-1-原理"><a href="#7-3-1-1-原理" class="headerlink" title="7.3.1.1 原理"></a>7.3.1.1 原理</h5><ol>
+<h3 id="6-3-标记清除-标记整理算法：FullGC又叫MajorGC（全局GC"><a href="#6-3-标记清除-标记整理算法：FullGC又叫MajorGC（全局GC" class="headerlink" title="6.3 标记清除/标记整理算法：FullGC又叫MajorGC（全局GC)"></a>6.3 标记清除/标记整理算法：FullGC又叫MajorGC（全局GC)</h3><p>老年代一般是由标记清除或者是标记清除与标记整理的混合实现</p>
+<h4 id="6-3-1-标记清除（Mark-Sweep"><a href="#6-3-1-标记清除（Mark-Sweep" class="headerlink" title="6.3.1 标记清除（Mark-Sweep)"></a>6.3.1 标记清除（Mark-Sweep)</h4><h5 id="6-3-1-1-原理"><a href="#6-3-1-1-原理" class="headerlink" title="6.3.1.1 原理"></a>6.3.1.1 原理</h5><ol>
 <li><p>标记（mark）</p>
 <p>从根集合开始扫描，对存活的对象进行标记</p>
 </li>
@@ -572,11 +572,11 @@ Class Loader类加载器
 <p>扫描整个内存空间，回收未被标记的对象，使用free-list记录可以区域。</p>
 </li>
 </ol>
-<h5 id="7-3-1-2-劣势"><a href="#7-3-1-2-劣势" class="headerlink" title="7.3.1.2 劣势"></a>7.3.1.2 劣势</h5><ol>
+<h5 id="6-3-1-2-劣势"><a href="#6-3-1-2-劣势" class="headerlink" title="6.3.1.2 劣势"></a>6.3.1.2 劣势</h5><ol>
 <li>效率低（递归与全堆对象遍历），而且在进行GC的时候，需要停止应用程序，这会导致用户体验非常差劲</li>
 <li>清理出来的空闲内存不是连续的，我们的死亡对象都是随机的出现在内存的各个角落，限制把他们清除之后，内存的布局自然会乱七八糟，而为了应付这一点，JVM不得不维持一个内存的空闲列表，这又是一种开销，而且在分配数组对象的时候，寻找连续的内存空间会不太好找。</li>
 </ol>
-<h4 id="7-3-2-标记整理（Mark-Compact"><a href="#7-3-2-标记整理（Mark-Compact" class="headerlink" title="7.3.2 标记整理（Mark-Compact)"></a>7.3.2 标记整理（Mark-Compact)</h4><h5 id="7-3-2-1-原理"><a href="#7-3-2-1-原理" class="headerlink" title="7.3.2.1 原理"></a>7.3.2.1 原理</h5><ol>
+<h4 id="6-3-2-标记整理（Mark-Compact"><a href="#6-3-2-标记整理（Mark-Compact" class="headerlink" title="6.3.2 标记整理（Mark-Compact)"></a>6.3.2 标记整理（Mark-Compact)</h4><h5 id="6-3-2-1-原理"><a href="#6-3-2-1-原理" class="headerlink" title="6.3.2.1 原理"></a>6.3.2.1 原理</h5><ol>
 <li><p>标记</p>
 <p>与标记-清除一样</p>
 </li>
@@ -584,8 +584,8 @@ Class Loader类加载器
 <p>再次扫描，并往一段滑动存活对象</p>
 </li>
 </ol>
-<h5 id="7-3-2-2-劣势"><a href="#7-3-2-2-劣势" class="headerlink" title="7.3.2.2 劣势"></a>7.3.2.2 劣势</h5><p>效率不高，不仅要标记所有存活对象，还要整理所有存活对象的引用地址。从效率上说，效率要低于复制算法</p>
-<h3 id="7-4-小总结"><a href="#7-4-小总结" class="headerlink" title="7.4 小总结"></a>7.4 小总结</h3><ul>
+<h5 id="6-3-2-2-劣势"><a href="#6-3-2-2-劣势" class="headerlink" title="6.3.2.2 劣势"></a>6.3.2.2 劣势</h5><p>效率不高，不仅要标记所有存活对象，还要整理所有存活对象的引用地址。从效率上说，效率要低于复制算法</p>
+<h3 id="6-4-小总结"><a href="#6-4-小总结" class="headerlink" title="6.4 小总结"></a>6.4 小总结</h3><ul>
 <li><strong>内存效率</strong>：复制算法&gt;标记清除算法&gt;标记整理算法</li>
 <li><strong>内存整齐度</strong>：复制算法=标记整理算法&gt;标记清除算法</li>
 <li><strong>内存利用率</strong>：标记整理算法=标记清除算法&gt;复制算法</li>
@@ -1303,6 +1303,6 @@ $(function () {
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
 
-</body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/assets/hibiki.model.json"},"display":{"position":"right","width":150,"height":305},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body>
 
 </html>
