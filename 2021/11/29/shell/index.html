@@ -387,7 +387,7 @@ shell能做什么​        1，自动化">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-12-07
+                    2021-12-11
                 </div>
                 
 
@@ -472,7 +472,7 @@ lrwxrwxrwx. 1 root root   4 5月 27 2017 sh -> bash
 echo "helloworld"
 </code></pre>
 <h5 id="（3）脚本的常用执行方式"><a href="#（3）脚本的常用执行方式" class="headerlink" title="（3）脚本的常用执行方式"></a>（3）脚本的常用执行方式</h5><p>第一种：采用bash或sh+脚本的相对路径或绝对路径（不用赋予脚本+x权限）</p>
-<pre><code>  sh+脚本的相对路径
+<pre class=" language-sehll"><code class="language-sehll">  sh+脚本的相对路径
 
 [atguigu@hadoop101 datas]$ sh helloworld.sh 
 
@@ -497,7 +497,7 @@ Helloworld
 Helloworld
 </code></pre>
 <p>第二种：采用输入脚本的绝对路径或相对路径执行脚本（必须具有可执行权限+x）</p>
-<pre><code>（a）首先要赋予helloworld.sh 脚本的+x权限
+<pre class=" language-shell"><code class="language-shell">（a）首先要赋予helloworld.sh 脚本的+x权限
 
 [atguigu@hadoop101 datas]$ chmod 777 helloworld.sh
 
@@ -518,7 +518,7 @@ Helloworld
 注意：第一种执行方法，本质是bash解析器帮你执行脚本，所以脚本本身不需要执行权限。第二种执行方法，本质是脚本需要自己执行，所以需要执行权限。
 </code></pre>
 <p>3．第二个Shell脚本：多命令处理</p>
-<pre><code>（1）需求：
+<pre class=" language-shell"><code class="language-shell">（1）需求：
 
 在/home/atguigu/目录下创建一个banzhang.txt,在banzhang.txt文件中增加“I love cls”。
 
@@ -540,9 +540,9 @@ cd /home/atguigu
 
 touch cls.txt
 
-echo "I love cls" &gt;&gt;cls.txt
+echo "I love cls" >>cls.txt
 </code></pre>
-<h2 id="四-Shell中的变量"><a href="#四-Shell中的变量" class="headerlink" title="四.Shell中的变量"></a>四.Shell中的变量</h2><h3 id="4-1-系统变量"><a href="#4-1-系统变量" class="headerlink" title="4.1 系统变量"></a>4.1 系统变量</h3><pre><code>\1. 常用系统变量
+<h2 id="四-Shell中的变量"><a href="#四-Shell中的变量" class="headerlink" title="四.Shell中的变量"></a>四.Shell中的变量</h2><h3 id="4-1-系统变量"><a href="#4-1-系统变量" class="headerlink" title="4.1 系统变量"></a>4.1 系统变量</h3><pre class=" language-shell"><code class="language-shell">\1. 常用系统变量
 
 $HOME、$PWD、$SHELL、$USER等
 
@@ -576,7 +576,7 @@ BASH_ARGV=()
 <p>​    （3）在bash中，变量默认类型都是字符串类型，无法直接进行数值运算。</p>
 <p>​    （4）变量的值如果有空格，需要使用双引号或单引号括起来。</p>
 <p>3．案例实操</p>
-<pre><code>```
+<pre class=" language-shell"><code class="language-shell">```
 （1）定义变量A
 
 [atguigu@hadoop101 datas]$ A=5
@@ -636,11 +636,28 @@ I love banzhang
 export 变量名
 
 [atguigu@hadoop101 datas]$ vim helloworld.sh 
+
+  在helloworld.sh文件中增加echo $B
+​    
+​    \#!/bin/bash
+
+
+​     
+​    
+​    echo "helloworld"
+​    
+​    echo $B
+
+
+​     
+​    
+​    [atguigu@hadoop101 datas]$ ./helloworld.sh 
+​    
+​    Helloworld
+​    
 </code></pre>
-<p>​<br>​<br>​    在helloworld.sh文件中增加echo $B<br>​<br>​    #!/bin/bash</p>
-<p>​<br>​<br>​    echo “helloworld”<br>​<br>​    echo $B</p>
-<p>​<br>​<br>​    [atguigu@hadoop101 datas]$ ./helloworld.sh<br>​<br>​    Helloworld<br>​<br>    发现并没有打印输出变量B的值。</p>
-<pre><code>[atguigu@hadoop101 datas]$ export B
+<p>​    发现并没有打印输出变量B的值。<br>​    </p>
+<pre class=" language-shell"><code class="language-shell">[atguigu@hadoop101 datas]$ export B
 
 [atguigu@hadoop101 datas]$ ./helloworld.sh 
 
@@ -653,7 +670,7 @@ helloworld
 <p>​    $n  （功能描述：n为数字，$0代表该脚本名称，$1-$9代表第一到第九个参数，十以上的参数，十以上的参数需要用大括号包含，如${10}）</p>
 <p>2．案例实操</p>
 <p>（1）输出该脚本文件名称、输入参数1和输入参数2 的值</p>
-<pre><code>  [atguigu@hadoop101 datas]$ touch parameter.sh 
+<pre class=" language-shell"><code class="language-shell">  [atguigu@hadoop101 datas]$ touch parameter.sh 
   
   [atguigu@hadoop101 datas]$ vim parameter.sh
   
@@ -677,7 +694,7 @@ helloworld
 <p>​    $#  （功能描述：获取所有输入参数个数，常用于循环）。</p>
 <p>2．案例实操</p>
 <p>（1）获取输入参数的个数</p>
-<pre><code>  [atguigu@hadoop101 datas]$ vim parameter.sh
+<pre class=" language-shell"><code class="language-shell">  [atguigu@hadoop101 datas]$ vim parameter.sh
   
    
   
@@ -704,7 +721,7 @@ helloworld
 <p>​    $@ （功能描述：这个变量也代表命令行中所有的参数，不过$@把每个参数区分对待）</p>
 <p>2．案例实操</p>
 <p>（1）打印输入的所有参数</p>
-<pre><code>  [atguigu@hadoop101 datas]$ vim parameter.sh
+<pre class=" language-shell"><code class="language-shell">  [atguigu@hadoop101 datas]$ vim parameter.sh
   
    
   
@@ -740,19 +757,34 @@ helloworld
 <h2 id="五-运算符"><a href="#五-运算符" class="headerlink" title="五.运算符"></a>五.运算符</h2><h3 id="1．基本语法"><a href="#1．基本语法" class="headerlink" title="1．基本语法"></a>1．基本语法</h3><p>（1）“$((运算式))”或“$[运算式]”</p>
 <p>（2）expr  + , - , *, /, %  加，减，乘，除，取余</p>
 <p>  <strong>注意：expr运算符间要有空格</strong></p>
-<h3 id="2．案例实操："><a href="#2．案例实操：" class="headerlink" title="2．案例实操："></a>2．案例实操：</h3><p>（1）计算3+2的值</p>
-<p>   [atguigu@hadoop101 datas]$ expr 2 + 3</p>
-<p>   5</p>
-<p>（2）计算3-2的值</p>
-<p>   [atguigu@hadoop101 datas]$ expr 3 - 2 </p>
-<p>   1</p>
-<p>（3）计算（2+3）X4的值</p>
-<p>​    （a）expr一步完成计算</p>
-<p>​     [atguigu@hadoop101 datas]$ expr <code>expr 2 + 3</code> * 4</p>
-<p>​     20</p>
-<p>（b）采用$[运算式]方式</p>
-<p>   [atguigu@hadoop101 datas]# S=$[(2+3)*4]</p>
-<p>   [atguigu@hadoop101 datas]# echo $S</p>
+<h3 id="2．案例实操："><a href="#2．案例实操：" class="headerlink" title="2．案例实操："></a>2．案例实操：</h3><pre class=" language-shell"><code class="language-shell">（1）计算3+2的值
+
+   [atguigu@hadoop101 datas]$ expr 2 + 3
+
+   5
+
+（2）计算3-2的值
+
+   [atguigu@hadoop101 datas]$ expr 3 - 2 
+
+   1
+
+（3）计算（2+3）X4的值
+
+​    （a）expr一步完成计算
+
+​     [atguigu@hadoop101 datas]$ expr `expr 2 + 3` \* 4
+
+​     20
+
+（b）采用$[运算式]方式
+
+   [atguigu@hadoop101 datas]# S=$[(2+3)*4]
+
+   [atguigu@hadoop101 datas]# echo $S
+
+    
+</code></pre>
 <h2 id="六-条件判断"><a href="#六-条件判断" class="headerlink" title="六.条件判断"></a>六.条件判断</h2><h3 id="1．基本语法-1"><a href="#1．基本语法-1" class="headerlink" title="1．基本语法"></a>1．基本语法</h3><p>[ condition ]（注意condition前后要有空格）</p>
 <p>注意：条件非空即为true，[ atguigu ]返回true，[] 返回false。</p>
 <h3 id="2-常用判断条件"><a href="#2-常用判断条件" class="headerlink" title="2.常用判断条件"></a>2.常用判断条件</h3><p>（1）两个整数之间比较</p>
@@ -767,7 +799,9 @@ helloworld
 <p>​        -f 文件存在并且是一个常规的文件（file）</p>
 <p>​        -e 文件存在（existence）     -d 文件存在并是一个目录（directory）</p>
 <p>3．案例实操</p>
-<p>​    （1）23是否大于等于22</p>
+<pre><code>~~~shell
+</code></pre>
+<p>（1）23是否大于等于22</p>
 <p>​                [atguigu@hadoop101 datas]$ [ 23 -ge 22 ]</p>
 <p>​                [atguigu@hadoop101 datas]$ echo ​$?</p>
 <p>​                0</p>
@@ -783,7 +817,7 @@ helloworld
 <p>​        [atguigu@hadoop101 ~]$ [ condition ] &amp;&amp; echo OK || echo notok</p>
 <p>​        OK</p>
 <p>​        [atguigu@hadoop101 datas]$ [ condition ] &amp;&amp; [ ] || echo notok</p>
-<p>​        notok</p>
+<p>​        notok<br>    ~~~</p>
 <h2 id="七-流程控制"><a href="#七-流程控制" class="headerlink" title="七.流程控制"></a>七.流程控制</h2><p>​    1．基本语法</p>
 <p>​        if [ 条件判断式 ];then </p>
 <pre><code>     程序 
@@ -918,7 +952,7 @@ esac
 </code></pre>
 <p> <strong>done</strong></p>
 <p>2．案例实操</p>
-<pre class=" language-xshell"><code class="language-xshell">（1）从1加到100
+<pre class=" language-shell"><code class="language-shell">（1）从1加到100
 
 [atguigu@hadoop101 datas]$ touch for1.sh
 
@@ -956,7 +990,7 @@ echo $s
 <p>  程序 </p>
 <p> done</p>
 <p>4．案例实操</p>
-<pre><code>```
+<pre class=" language-shell"><code class="language-shell">```
 （1）打印所有输入参数
 
 ​        [atguigu@hadoop101 datas]$ touch for2.sh
@@ -964,11 +998,9 @@ echo $s
 ​        [atguigu@hadoop101 datas]$ vim for2.sh
 </code></pre>
 <p>​<br>​<br>​    #!/bin/bash<br>​<br>​    #打印数字</p>
-<p>​<br>​<br>​    for i in $*<br>​<br>​      do<br>​<br>       echo “ban zhang love $i “</p>
-<pre><code>  done
-</code></pre>
-<p>​<br>​<br>​    [atguigu@hadoop101 datas]$ chmod 777 for2.sh<br>​<br>​    [atguigu@hadoop101 datas]$ bash for2.sh cls xz bd<br>​<br>    ban zhang love cls</p>
-<pre><code>ban zhang love xz
+<p>​<br>​<br>​    for i in $*<br>​<br>​      do<br>​<br>​       echo “ban zhang love $i “<br>​<br>      done</p>
+<p>​<br>​<br>​    [atguigu@hadoop101 datas]$ chmod 777 for2.sh<br>​<br>​    [atguigu@hadoop101 datas]$ bash for2.sh cls xz bd<br>​<br>​    ban zhang love cls<br>​    </p>
+<pre class=" language-shell"><code class="language-shell">ban zhang love xz
 
 ban zhang love bd
 
@@ -983,18 +1015,18 @@ ban zhang love bd
 [atguigu@hadoop101 datas]$ vim for.sh
 </code></pre>
 <p>​<br>​<br>​    #!/bin/bash</p>
-<p>​<br>​<br>​    for i in “$*”<br>​<br>​    #$*中的所有参数看成是一个整体，所以这个for循环只会循环一次<br>​<br>        do </p>
-<pre><code>​        echo "ban zhang love $i"
+<p>​<br>​<br>​    for i in “$*”<br>​<br>​    #$*中的所有参数看成是一个整体，所以这个for循环只会循环一次<br>​<br>​        do<br>​    </p>
+<pre class=" language-shell"><code class="language-shell">        echo "ban zhang love $i"
 
 ​    done 
 </code></pre>
-<p>​<br>​<br>​    for j in “$@”<br>​<br>​    #$@中的每个参数都看成是独立的，所以“$@”中有几个参数，就会循环几次<br>​<br>        do </p>
-<pre><code>​        echo "ban zhang love $j" 
+<p>​<br>​<br>​    for j in “$@”<br>​<br>​    #$@中的每个参数都看成是独立的，所以“$@”中有几个参数，就会循环几次<br>​<br>​        do<br>​    </p>
+<pre class=" language-shell"><code class="language-shell">        echo "ban zhang love $j" 
 
 done
 </code></pre>
-<p>​<br>​<br>​    [atguigu@hadoop101 datas]$ chmod 777 for.sh<br>​<br>​    [atguigu@hadoop101 datas]$ bash for.sh cls xz bd<br>​<br>    ban zhang love cls xz bd</p>
-<pre><code>ban zhang love cls
+<p>​<br>​    [atguigu@hadoop101 datas]$ chmod 777 for.sh<br>​<br>​    [atguigu@hadoop101 datas]$ bash for.sh cls xz bd<br>​<br>​    ban zhang love cls xz bd<br>​    </p>
+<pre class=" language-shell"><code class="language-shell">ban zhang love cls
 
 ban zhang love xz
 
@@ -1007,15 +1039,15 @@ ban zhang love bd
 <p>  程序</p>
 <p> done</p>
 <p>2．案例实操</p>
-<pre><code>```shell
+<pre class=" language-shell"><code class="language-shell">```shell
 （1）从1加到100
 
 [atguigu@hadoop101 datas]$ touch while.sh
 
 [atguigu@hadoop101 datas]$ vim while.sh
+    
 </code></pre>
-<p>​<br>​<br>​    #!/bin/bash<br>​<br>​    s=0<br>​<br>    i=1</p>
-<pre><code>while [ $i -le 100 ]
+<pre class=" language-shell"><code class="language-shell">while [ $i -le 100 ]
 
 do
 
@@ -1025,8 +1057,7 @@ do
 
 done
 </code></pre>
-<p>​<br>​<br>​    echo $s</p>
-<p>​<br>​<br>​    [atguigu@hadoop101 datas]$ chmod 777 while.sh<br>​<br>​    [atguigu@hadoop101 datas]$ ./while.sh<br>​<br>    5050<br>    ```</p>
+<p>​     </p>
 <h1 id="第9章-函数"><a href="#第9章-函数" class="headerlink" title="第9章 函数"></a>第9章 函数</h1><h2 id="9-1-系统函数"><a href="#9-1-系统函数" class="headerlink" title="9.1 系统函数"></a>9.1 系统函数</h2><p>1．basename基本语法</p>
 <p>​        basename [string / pathname] [suffix]     （功能描述：basename命令会删掉所有的前缀包括最后一个（‘/’）字符，然后将字符串显示出来。</p>
 <p>选项：</p>
@@ -1495,7 +1526,7 @@ filename:passwd, linenumber:3,columns:7
 <li>案例实操</li>
 </ol>
 <p>（0）数据准备</p>
-<pre><code>[atguigu@hadoop102 datas]$ touch sort.sh
+<pre class=" language-shell"><code class="language-shell">[atguigu@hadoop102 datas]$ touch sort.sh
 
 [atguigu@hadoop102 datas]$ vim sort.sh 
 
@@ -1510,7 +1541,7 @@ cls:10:3.5
 ss:30:1.6
 </code></pre>
 <p>（1）按照“：”分割后的第三列倒序排序。</p>
-<pre><code>[atguigu@hadoop102 datas]$ sort -t : -nrk 3 sort.sh 
+<pre class=" language-shell"><code class="language-shell">[atguigu@hadoop102 datas]$ sort -t : -nrk 3 sort.sh 
 
 bb:40:5.4
 
@@ -1999,6 +2030,47 @@ ss:30:1.6
 
     <footer class="page-footer bg-color">
     
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="750545480"
+                   fixed='true'
+                   autoplay='true'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='false'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
 
     <div class="container row center-align"
          style="margin-bottom: 0px !important;">
@@ -2007,7 +2079,7 @@ ss:30:1.6
             
                 <span id="year">2021</span>
             
-            <a href="/about" target="_blank">huangyonghui</a>
+            <a href="/about" target="_blank">Yonghui Hunag</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
@@ -2253,6 +2325,6 @@ $(function () {
     <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/assets/hibiki.model.json"},"display":{"position":"left","width":150,"height":305},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/assets/hibiki.model.json"},"display":{"position":"left","width":150,"height":320},"mobile":{"show":true},"react":{"opacity":0.7}});</script></body>
 
 </html>
