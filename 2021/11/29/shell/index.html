@@ -8,7 +8,7 @@
     <meta name="description" content="一.Shell的概述​    shell是一个命令解释器， 他接收应用户需/用户命令，然后调用操作系统内核。
 
 ​    Shell还是一个功能相当强大的编程语言， 易编写、易调试、灵活性强。
-二. Shell解析器（1）Linux提供的S">
+shell能做什么​        1，自动化">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -387,14 +387,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-11-29
+                    2021-12-07
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.3k
+                    2.5k
                 </div>
                 
 
@@ -424,6 +424,16 @@
                 <h2 id="一-Shell的概述"><a href="#一-Shell的概述" class="headerlink" title="一.Shell的概述"></a>一.Shell的概述</h2><p>​    shell是一个<strong>命令解释器</strong>， 他接收应用户需/用户命令，然后调用操作系统内核。</p>
 <p><img src="https://s3.bmp.ovh/imgs/2021/11/15d9de6c7d92d622.jpg"></p>
 <p>​    Shell还是一个功能相当强大的编程语言， 易编写、易调试、灵活性强。</p>
+<h3 id="shell能做什么"><a href="#shell能做什么" class="headerlink" title="shell能做什么"></a>shell能做什么</h3><p>​        1，自动化批量系统初始化程序（update，软件安装，时区设置…）</p>
+<p>​        2，自动化批量软件部署（LAMP，LNMP，Tomcat…）</p>
+<p>​        3，管理应用程序</p>
+<p>​        4，日志的分析处理程序（输出网站的访问量）</p>
+<p>​        5，可以写自动化备份恢复程序（MySql完全备份/增量）</p>
+<p>​        6，自动化管理程序（批量远程修改密码，软件的升级，配置更新）</p>
+<p>​        7，自动化的信息采集及监控程序（收集系统/应用状态信息，CPU，      Mem，Net等）</p>
+<p>​        8，配合Zabbix实现信息采集</p>
+<p>​        9，可以写一个shell脚本实现自动化扩容</p>
+<p>​        10，可以使用shell写小程序，比如俄罗斯方块</p>
 <h2 id="二-Shell解析器"><a href="#二-Shell解析器" class="headerlink" title="二. Shell解析器"></a>二. Shell解析器</h2><h3 id="（1）Linux提供的Shell解析器有："><a href="#（1）Linux提供的Shell解析器有：" class="headerlink" title="（1）Linux提供的Shell解析器有："></a>（1）Linux提供的Shell解析器有：</h3><pre class=" language-shell"><code class="language-shell">[atguigu@hadoop101 ~]$ cat /etc/shells 
 
 /bin/sh
@@ -627,12 +637,10 @@ export 变量名
 
 [atguigu@hadoop101 datas]$ vim helloworld.sh 
 </code></pre>
-<p>​<br>​<br>​    在helloworld.sh文件中增加echo $B<br>​<br>    #!/bin/bash</p>
-<p>​<br>​<br>​    echo “helloworld”<br>​<br>    echo $B</p>
-<p>​<br>​<br>​    [atguigu@hadoop101 datas]$ ./helloworld.sh<br>​<br>    Helloworld</p>
-<pre><code>发现并没有打印输出变量B的值。
-
-[atguigu@hadoop101 datas]$ export B
+<p>​<br>​<br>​    在helloworld.sh文件中增加echo $B<br>​<br>​    #!/bin/bash</p>
+<p>​<br>​<br>​    echo “helloworld”<br>​<br>​    echo $B</p>
+<p>​<br>​<br>​    [atguigu@hadoop101 datas]$ ./helloworld.sh<br>​<br>​    Helloworld<br>​<br>    发现并没有打印输出变量B的值。</p>
+<pre><code>[atguigu@hadoop101 datas]$ export B
 
 [atguigu@hadoop101 datas]$ ./helloworld.sh 
 
@@ -955,16 +963,12 @@ echo $s
 
 ​        [atguigu@hadoop101 datas]$ vim for2.sh
 </code></pre>
-<p>​<br>​<br>​    #!/bin/bash<br>​<br>    #打印数字</p>
-<p>​<br>​<br>​    for i in $*<br>​<br>      do</p>
-<pre><code>   echo "ban zhang love $i "
-
-  done
+<p>​<br>​<br>​    #!/bin/bash<br>​<br>​    #打印数字</p>
+<p>​<br>​<br>​    for i in $*<br>​<br>​      do<br>​<br>       echo “ban zhang love $i “</p>
+<pre><code>  done
 </code></pre>
-<p>​<br>​<br>​    [atguigu@hadoop101 datas]$ chmod 777 for2.sh<br>​<br>    [atguigu@hadoop101 datas]$ bash for2.sh cls xz bd</p>
-<pre><code>ban zhang love cls
-
-ban zhang love xz
+<p>​<br>​<br>​    [atguigu@hadoop101 datas]$ chmod 777 for2.sh<br>​<br>​    [atguigu@hadoop101 datas]$ bash for2.sh cls xz bd<br>​<br>    ban zhang love cls</p>
+<pre><code>ban zhang love xz
 
 ban zhang love bd
 
@@ -979,24 +983,18 @@ ban zhang love bd
 [atguigu@hadoop101 datas]$ vim for.sh
 </code></pre>
 <p>​<br>​<br>​    #!/bin/bash</p>
-<p>​<br>​<br>​    for i in “$*”<br>​<br>    #$*中的所有参数看成是一个整体，所以这个for循环只会循环一次 </p>
-<pre><code>​    do 
-
-​        echo "ban zhang love $i"
+<p>​<br>​<br>​    for i in “$*”<br>​<br>​    #$*中的所有参数看成是一个整体，所以这个for循环只会循环一次<br>​<br>        do </p>
+<pre><code>​        echo "ban zhang love $i"
 
 ​    done 
 </code></pre>
-<p>​<br>​<br>​    for j in “$@”<br>​<br>    #$@中的每个参数都看成是独立的，所以“$@”中有几个参数，就会循环几次 </p>
-<pre><code>​    do 
-
-​        echo "ban zhang love $j" 
+<p>​<br>​<br>​    for j in “$@”<br>​<br>​    #$@中的每个参数都看成是独立的，所以“$@”中有几个参数，就会循环几次<br>​<br>        do </p>
+<pre><code>​        echo "ban zhang love $j" 
 
 done
 </code></pre>
-<p>​<br>​<br>​    [atguigu@hadoop101 datas]$ chmod 777 for.sh<br>​<br>    [atguigu@hadoop101 datas]$ bash for.sh cls xz bd</p>
-<pre><code>ban zhang love cls xz bd
-
-ban zhang love cls
+<p>​<br>​<br>​    [atguigu@hadoop101 datas]$ chmod 777 for.sh<br>​<br>​    [atguigu@hadoop101 datas]$ bash for.sh cls xz bd<br>​<br>    ban zhang love cls xz bd</p>
+<pre><code>ban zhang love cls
 
 ban zhang love xz
 
@@ -1016,10 +1014,8 @@ ban zhang love bd
 
 [atguigu@hadoop101 datas]$ vim while.sh
 </code></pre>
-<p>​<br>​<br>​    #!/bin/bash<br>​<br>    s=0</p>
-<pre><code>i=1
-
-while [ $i -le 100 ]
+<p>​<br>​<br>​    #!/bin/bash<br>​<br>​    s=0<br>​<br>    i=1</p>
+<pre><code>while [ $i -le 100 ]
 
 do
 
@@ -1030,10 +1026,7 @@ do
 done
 </code></pre>
 <p>​<br>​<br>​    echo $s</p>
-<p>​<br>​<br>​    [atguigu@hadoop101 datas]$ chmod 777 while.sh<br>​<br>    [atguigu@hadoop101 datas]$ ./while.sh </p>
-<pre><code>5050
-```
-</code></pre>
+<p>​<br>​<br>​    [atguigu@hadoop101 datas]$ chmod 777 while.sh<br>​<br>​    [atguigu@hadoop101 datas]$ ./while.sh<br>​<br>    5050<br>    ```</p>
 <h1 id="第9章-函数"><a href="#第9章-函数" class="headerlink" title="第9章 函数"></a>第9章 函数</h1><h2 id="9-1-系统函数"><a href="#9-1-系统函数" class="headerlink" title="9.1 系统函数"></a>9.1 系统函数</h2><p>1．basename基本语法</p>
 <p>​        basename [string / pathname] [suffix]     （功能描述：basename命令会删掉所有的前缀包括最后一个（‘/’）字符，然后将字符串显示出来。</p>
 <p>选项：</p>
@@ -2020,7 +2013,7 @@ ss:30:1.6
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">22.4k</span>
+                        class="white-color">22.6k</span>
             
             
             
