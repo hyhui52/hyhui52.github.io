@@ -431,7 +431,7 @@
 <p><strong>比如要新增或查找某个元素，我们通过把当前元素的关键字 通过某个函数映射到数组中的某个位置，通过数组下标一次定位就可完成操作。</strong></p>
 <p>这个函数可以简单描述为：<strong>存储位置 = f(关键字)</strong> ，这个函数f一般称为哈希函数，这个函数的设计好坏会直接影响到哈希表的优劣。举个例子，比如要在哈希表中执行插入操作：</p>
 <p>插入过程如下图所示：</p>
-<p><img src="http://cdn.xiongsihao.com/202003281554_785.png" alt="img"></p>
+<p><img src="http://cdn.xiongsihao.com/202003281554_785.png"></p>
 <p><strong>查找操作同理，先通过哈希函数计算出实际存储地址，然后从数组中对应地址取出即可。</strong></p>
 <h2 id="哈希冲突"><a href="#哈希冲突" class="headerlink" title="哈希冲突"></a>哈希冲突</h2><p><strong>如果两个不同的元素，通过哈希函数得出的实际存储地址相同怎么办</strong>？</p>
 <p>也就是说，当我们对某个元素进行哈希运算，得到一个存储地址，然后要进行插入的时候，发现已经被其他元素占用了，其实这就是所谓的<strong>哈希冲突</strong>，也叫<strong>哈希碰撞</strong>。</p>
@@ -495,7 +495,7 @@
 <p>简单来说，<strong>HashMap由数组+链表组成的</strong>，数组是HashMap的主体，链表则是主要为了解决哈希冲突而存在的。</p>
 <p>如果定位到的数组位置不含链表（当前entry的next指向null）,那么查找，添加等操作很快，仅需一次寻址即可；</p>
 <p>如果定位到的数组包含链表，对于添加操作，其时间复杂度为O(n)，首先遍历链表，存在即覆盖，否则新增；对于查找操作来讲，仍需遍历链表，然后通过key对象的equals方法逐一比对查找。所以，性能考虑，<strong>HashMap中的链表出现越少，性能才会越好。</strong></p>
-<h2 id="3-1-HashMap的默认值"><a href="#3-1-HashMap的默认值" class="headerlink" title="3.1 HashMap的默认值"></a>3.1 HashMap的默认值</h2><p><img src="http://cdn.xiongsihao.com/202003281714_517.png" alt="img"></p>
+<h2 id="3-1-HashMap的默认值"><a href="#3-1-HashMap的默认值" class="headerlink" title="3.1 HashMap的默认值"></a>3.1 HashMap的默认值</h2><p><img src="http://cdn.xiongsihao.com/202003281714_517.png"></p>
 <ul>
 <li><p><strong>DEFAULT_INITIAL_CAPACITY</strong>：</p>
 <p>默认的初始容量，必须是2的倍数。默认16也就是默认会创建 16 个箱子，箱子的个数不能太多或太少。如果太少，很容易触发扩容，如果太多，遍历哈希表会比较慢。</p>
@@ -515,7 +515,7 @@
 <p>因为HashMap在确定数组下标Index的时候，采用的是( length-1) &amp; hash的方式，只有当length为2的指数幂的时候才能较均匀的分布元素，所以HashMap规定了其容量必须是2的n次方。</p>
 <p>而采用位运算&lt;&lt;来控制HashMap的大小，使用位运算同时还提高了Java的处理速度。 HashMap内部由Entry[]数组构成，Java的数组下标是由Int表示的。所以对于HashMap来说其最大的容量应该是不超过int最大值的一个2的指数幂，而最接近int最大值的2个指数幂用位运算符表示就是 1 &lt;&lt; 30。</p>
 <h2 id="3-2-其他几个重要字段"><a href="#3-2-其他几个重要字段" class="headerlink" title="3.2 其他几个重要字段"></a>3.2 其他几个重要字段</h2><p>查看hashmap源码：</p>
-<p><img src="http://cdn.xiongsihao.com/202003281654_329.png" alt="img"></p>
+<p><img src="http://cdn.xiongsihao.com/202003281654_329.png"></p>
 <ul>
 <li><p>transient int size：<strong>实际存储的key-value键值对的个数</strong></p>
 </li>
@@ -722,7 +722,7 @@
 <p>⑤.遍历table[i]，判断链表长度是否大于8，大于8的话把链表转换为红黑树，在红黑树中执行插入操作，否则进行链表的插入操作；遍历过程中若发现key已经存在直接覆盖value即可；</p>
 <p>⑥.插入成功后，判断实际存在的键值对数量size是否超多了最大容量threshold，如果超过，进行扩容。</p>
 <p><strong>附：HashMap put方法逻辑图（JDK1.8）</strong></p>
-<p><img src="http://cdn.xiongsihao.com/202003281858_958.png" alt="img"></p>
+<p><img src="http://cdn.xiongsihao.com/202003281858_958.png"></p>
 <h2 id="4-4-红黑树中查找元素-getTreeNode"><a href="#4-4-红黑树中查找元素-getTreeNode" class="headerlink" title="4.4 红黑树中查找元素 getTreeNode()"></a>4.4 红黑树中查找元素 getTreeNode()</h2><p>HashMap 在 JDK 1.8 中新增的操作： 红黑树中查找元素 getTreeNode()</p>
 <pre class=" language-java"><code class="language-java"><span class="token keyword">final</span> Node<span class="token operator">&lt;</span>K<span class="token punctuation">,</span>V<span class="token operator">></span> <span class="token function">getNode</span><span class="token punctuation">(</span><span class="token keyword">int</span> hash<span class="token punctuation">,</span> Object key<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     Node<span class="token operator">&lt;</span>K<span class="token punctuation">,</span>V<span class="token operator">></span><span class="token punctuation">[</span><span class="token punctuation">]</span> tab<span class="token punctuation">;</span> Node<span class="token operator">&lt;</span>K<span class="token punctuation">,</span>V<span class="token operator">></span> first<span class="token punctuation">,</span> e<span class="token punctuation">;</span> <span class="token keyword">int</span> n<span class="token punctuation">;</span> K k<span class="token punctuation">;</span>
@@ -1017,6 +1017,280 @@
     
         
     
+
+    
+        <style>
+    .twikoo-card {
+        margin: 1.5rem auto;
+    }
+
+    .twikoo-card .card-content {
+        padding: 20px;
+    }
+
+    #tcomments textarea {
+        box-sizing: border-box;
+        background: url("/") 100% 100% no-repeat;
+    }
+
+    #tcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #tcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #tcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #tcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #tcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #tcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #tcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #tcomments ul li {
+        list-style-type: disc;
+    }
+
+    #tcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #tcomments table,
+    th,
+    td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #tcomments table,
+    th,
+    td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n),
+    thead {
+        background-color: #fafafa;
+    }
+
+    #tcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #tcomments table td {
+        min-width: 80px;
+    }
+
+    #tcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #tcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #tcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #tcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #tcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #tcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #tcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #tcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #tcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #tcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #tcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #tcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #tcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #tcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #tcomments [type="checkbox"]:not(:checked),
+    [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #tcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #tcomments dfn {
+        font-style: italic;
+    }
+
+    #tcomments small {
+        font-size: 85%;
+    }
+
+    #tcomments cite {
+        font-style: normal;
+    }
+
+    #tcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #tcomments table,
+    th,
+    td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n),
+    thead {
+        background-color: #fafafa;
+    }
+
+    #tcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #tcomments table td {
+        min-width: 80px;
+    }
+
+    #tcomments [type="checkbox"]:not(:checked),
+    [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card twikoo-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div class="card-content" style="display: grid">
+        <div id="tcomments"></div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js"></script>
+<script>
+    twikoo.init({
+        envId: 'twikoo-1gs9l0fb17e7897a',
+        el: '#tcomments',
+        region: '',
+        path: ''
+    }).then(function () {
+        var tkInputs = document.querySelector('#twikoo').getElementsByTagName('input');
+        for (var tkInputsIndex = 0; tkInputsIndex < tkInputs.length; tkInputsIndex++) {
+            if (tkInputs[tkInputsIndex]) {
+                tkInputs[tkInputsIndex].classList.add('browser-default');
+            }
+        }
+    });
+</script>
 
     
 
